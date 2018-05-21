@@ -55,7 +55,7 @@ Plugins and Configurations
 ...
 
 Testing our App and using GC
-===========================
+============================
 
 ...
 
@@ -74,3 +74,6 @@ Detailed Feature Overview
 
 PPER 
 ----
+
+WIP. Testing and Static Configurations
+--------------------------------------
