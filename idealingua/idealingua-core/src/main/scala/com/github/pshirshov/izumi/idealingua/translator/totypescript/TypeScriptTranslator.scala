@@ -157,7 +157,7 @@ class TypeScriptTranslator(ts: Typespace, extensions: Seq[TypeScriptTranslatorEx
 //      )
 
       AliasProduct(
-        s"""// TypeScript does not natively support well type aliases.
+        content = s"""// TypeScript does not natively support well type aliases.
            |// Normally the code would be:
            |// export type ${i.id.name} = ${conv.toNativeType(i.target, ts)};
            |//
@@ -170,6 +170,8 @@ class TypeScriptTranslator(ts: Typespace, extensions: Seq[TypeScriptTranslatorEx
            |// See this and other referenced threads for more information:
            |// https://github.com/Microsoft/TypeScript/issues/2552
           """.stripMargin
+        , header = ""
+        , preamble = ""
       )
   }
 

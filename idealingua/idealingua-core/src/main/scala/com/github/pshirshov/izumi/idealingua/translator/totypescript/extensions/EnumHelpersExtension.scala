@@ -9,7 +9,7 @@ object EnumHelpersExtension extends TypeScriptTranslatorExtension {
   override def handleEnum(ctx: TSTContext, enum: TypeDef.Enumeration, product: EnumProduct): EnumProduct = {
     val it = enum.members.iterator
     val values = it.map { m =>
-      s"${enum.id.name}.${m}" + (if (it.hasNext) "," else "")
+      s"${enum.id.name}.$m" + (if (it.hasNext) "," else "")
     }.mkString("\n")
 
     val extension =
