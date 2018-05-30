@@ -1,7 +1,7 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Struct, StructSerialized } from './Name_stored_';
-import { Struct, StructSerialized } from './LengthInBytes';
-import { Name, Struct, StructSerialized } from './Name';
+import { Name_stored_Struct, Name_stored_StructSerialized } from './Name_stored_';
+import { LengthInBytesStruct, LengthInBytesStructSerialized } from './LengthInBytes';
+import { Name, NameStruct, NameStructSerialized } from './Name';
 
 // Name_view DTO
 export class Name_view implements Name  {
@@ -75,7 +75,7 @@ export class Name_view implements Name  {
         this.bytes = data.bytes;
     }
 
-    public toName(): StructSerialized {
+    public toName(): NameStructSerialized {
         return {
             'name': this.name
         };
@@ -90,13 +90,13 @@ export class Name_view implements Name  {
     }
 }
 
-export interface Name_viewSerialized extends StructSerialized  {
-    relatives: {[key: string]: StructSerialized}[];
+export interface Name_viewSerialized extends NameStructSerialized  {
+    relatives: {[key: string]: NameStructSerialized}[];
     name: string;
     bytes: number;
 }
 
-Struct.register(Name_view.FullClassName, Name_view);
-Struct.register(Name_view.FullClassName, Name_view);
-Struct.register(Name_view.FullClassName, Name_view);
-Struct.register(Name_view.FullClassName, Name_view);
+NameStruct.register(Name_view.FullClassName, Name_view);
+Name_stored_Struct.register(Name_view.FullClassName, Name_view);
+NameStruct.register(Name_view.FullClassName, Name_view);
+LengthInBytesStruct.register(Name_view.FullClassName, Name_view);

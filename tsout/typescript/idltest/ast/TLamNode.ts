@@ -1,7 +1,7 @@
 // Auto-generated, any modifications may be overwritten in the future.
 import { Type, TypeSerialized } from './Type';
-import { Struct, StructSerialized } from './TypeInfo';
-import { LamNode, Struct, StructSerialized } from './LamNode';
+import { TypeInfoStruct, TypeInfoStructSerialized } from './TypeInfo';
+import { LamNode, LamNodeStruct, LamNodeStructSerialized } from './LamNode';
 import { AST, ASTHelpers } from './AST';
 
 // TLamNode Interface
@@ -9,28 +9,28 @@ export interface TLamNode extends LamNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TLamNodeStructSerialized;
 
     type: Type;
     body: AST;
     paramNames: string[];
 }
 
-export interface StructSerialized extends StructSerialized {
+export interface TLamNodeStructSerialized extends LamNodeStructSerialized {
     type: TypeSerialized;
     body: {[key: string]: any};
     paramNames: string[];
 }
 
-export class Struct implements TLamNode {
+export class TLamNodeStruct implements TLamNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.TLamNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.TLamNode.Struct';
+    public static readonly ClassName = 'TLamNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.TLamNode.TLamNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TLamNodeStruct.PackageName; }
+    public getClassName(): string { return TLamNodeStruct.ClassName; }
+    public getFullClassName(): string { return TLamNodeStruct.FullClassName; }
 
     private _type: Type;
     private _body: AST;
@@ -69,7 +69,7 @@ export class Struct implements TLamNode {
         this._paramNames = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TLamNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -79,7 +79,7 @@ export class Struct implements TLamNode {
         this.paramNames = data.paramNames.slice();
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TLamNodeStructSerialized {
         return {
             'type': this.type.serialize(),
             'body': ASTHelpers.serialize(this.body),
@@ -87,29 +87,29 @@ export class Struct implements TLamNode {
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TLamNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TLamNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TLamNodeStruct | TLamNodeStructSerialized): TLamNode}} = {
+        [TLamNodeStruct.FullClassName]: TLamNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TLamNode}): void {
+    public static register(className: string, ctor: {new (data?: TLamNodeStruct | TLamNodeStructSerialized): TLamNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TLamNode {
+    public static create(data: {[key: string]: TLamNodeStructSerialized}): TLamNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TLamNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TLamNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
+TLamNodeStruct.register(TLamNodeStruct.FullClassName, TLamNodeStruct);
+LamNodeStruct.register(TLamNodeStruct.FullClassName, TLamNodeStruct);
+TypeInfoStruct.register(TLamNodeStruct.FullClassName, TLamNodeStruct);

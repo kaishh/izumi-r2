@@ -27,7 +27,7 @@ class ModuleTools() {
       code
     } else {
       s"""// Auto-generated, any modifications may be overwritten in the future.
-          |${header}
+          |$header
           |
           |$code
        """.stripMargin

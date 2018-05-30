@@ -1,5 +1,5 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { TestMixin, Struct, StructSerialized } from './TestMixin';
+import { TestMixin, TestMixinStruct, TestMixinStructSerialized } from './TestMixin';
 
 // TestDto DTO
 export class TestDto  {
@@ -41,5 +41,5 @@ export class TestDto  {
 }
 
 export interface TestDtoSerialized  {
-    testMixin: {[key: string]: StructSerialized};
+    testMixin: {[key: string]: TestMixinStructSerialized};
 }

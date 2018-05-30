@@ -1,13 +1,13 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Struct, StructSerialized } from './IntPair';
-import { Metadata, Struct, StructSerialized } from './Metadata';
+import { IntPairStruct, IntPairStructSerialized } from './IntPair';
+import { Metadata, MetadataStruct, MetadataStructSerialized } from './Metadata';
 
 // PointLike Interface
 export interface PointLike extends Metadata {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): PointLikeStructSerialized;
 
     y: number;
     name: string;
@@ -15,22 +15,22 @@ export interface PointLike extends Metadata {
     id: string;
 }
 
-export interface StructSerialized extends StructSerialized {
+export interface PointLikeStructSerialized extends MetadataStructSerialized {
     y: number;
     name: string;
     x: number;
     id: string;
 }
 
-export class Struct implements PointLike {
+export class PointLikeStruct implements PointLike {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.inheritance.PointLike';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.inheritance.PointLike.Struct';
+    public static readonly ClassName = 'PointLikeStruct';
+    public static readonly FullClassName = 'idltest.inheritance.PointLike.PointLikeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return PointLikeStruct.PackageName; }
+    public getClassName(): string { return PointLikeStruct.ClassName; }
+    public getFullClassName(): string { return PointLikeStruct.FullClassName; }
 
     private _y: number;
     private _name: string;
@@ -109,7 +109,7 @@ export class Struct implements PointLike {
         this._id = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: PointLikeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -120,7 +120,7 @@ export class Struct implements PointLike {
         this.id = data.id;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): PointLikeStructSerialized {
         return {
             'y': this.y,
             'name': this.name,
@@ -129,29 +129,29 @@ export class Struct implements PointLike {
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use PointLikeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): PointLike}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: PointLikeStruct | PointLikeStructSerialized): PointLike}} = {
+        [PointLikeStruct.FullClassName]: PointLikeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): PointLike}): void {
+    public static register(className: string, ctor: {new (data?: PointLikeStruct | PointLikeStructSerialized): PointLike}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): PointLike {
+    public static create(data: {[key: string]: PointLikeStructSerialized}): PointLike {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = PointLikeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for PointLikeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
+PointLikeStruct.register(PointLikeStruct.FullClassName, PointLikeStruct);
+MetadataStruct.register(PointLikeStruct.FullClassName, PointLikeStruct);
+IntPairStruct.register(PointLikeStruct.FullClassName, PointLikeStruct);

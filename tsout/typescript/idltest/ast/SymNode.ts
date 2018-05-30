@@ -5,24 +5,24 @@ export interface SymNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): SymNodeStructSerialized;
 
     lit: string;
 }
 
-export interface StructSerialized {
+export interface SymNodeStructSerialized {
     lit: string;
 }
 
-export class Struct implements SymNode {
+export class SymNodeStruct implements SymNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.SymNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.SymNode.Struct';
+    public static readonly ClassName = 'SymNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.SymNode.SymNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return SymNodeStruct.PackageName; }
+    public getClassName(): string { return SymNodeStruct.ClassName; }
+    public getFullClassName(): string { return SymNodeStruct.FullClassName; }
 
     private _lit: string;
 
@@ -42,7 +42,7 @@ export class Struct implements SymNode {
         this._lit = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: SymNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -50,33 +50,33 @@ export class Struct implements SymNode {
         this.lit = data.lit;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): SymNodeStructSerialized {
         return {
             'lit': this.lit
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use SymNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): SymNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: SymNodeStruct | SymNodeStructSerialized): SymNode}} = {
+        [SymNodeStruct.FullClassName]: SymNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): SymNode}): void {
+    public static register(className: string, ctor: {new (data?: SymNodeStruct | SymNodeStructSerialized): SymNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): SymNode {
+    public static create(data: {[key: string]: SymNodeStructSerialized}): SymNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = SymNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for SymNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+SymNodeStruct.register(SymNodeStruct.FullClassName, SymNodeStruct);

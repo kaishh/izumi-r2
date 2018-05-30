@@ -1,33 +1,33 @@
 // Auto-generated, any modifications may be overwritten in the future.
 import { Type, TypeSerialized } from './Type';
-import { Struct, StructSerialized } from './TypeInfo';
-import { BoolNode, Struct, StructSerialized } from './BoolNode';
+import { TypeInfoStruct, TypeInfoStructSerialized } from './TypeInfo';
+import { BoolNode, BoolNodeStruct, BoolNodeStructSerialized } from './BoolNode';
 
 // TBoolNode Interface
 export interface TBoolNode extends BoolNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TBoolNodeStructSerialized;
 
     lit: boolean;
     type: Type;
 }
 
-export interface StructSerialized extends StructSerialized {
+export interface TBoolNodeStructSerialized extends BoolNodeStructSerialized {
     lit: boolean;
     type: TypeSerialized;
 }
 
-export class Struct implements TBoolNode {
+export class TBoolNodeStruct implements TBoolNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.TBoolNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.TBoolNode.Struct';
+    public static readonly ClassName = 'TBoolNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.TBoolNode.TBoolNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TBoolNodeStruct.PackageName; }
+    public getClassName(): string { return TBoolNodeStruct.ClassName; }
+    public getFullClassName(): string { return TBoolNodeStruct.FullClassName; }
 
     private _lit: boolean;
     private _type: Type;
@@ -59,7 +59,7 @@ export class Struct implements TBoolNode {
         this._type = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TBoolNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -68,36 +68,36 @@ export class Struct implements TBoolNode {
         this.type = new Type(data.type);
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TBoolNodeStructSerialized {
         return {
             'lit': this.lit,
             'type': this.type.serialize()
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TBoolNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TBoolNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TBoolNodeStruct | TBoolNodeStructSerialized): TBoolNode}} = {
+        [TBoolNodeStruct.FullClassName]: TBoolNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TBoolNode}): void {
+    public static register(className: string, ctor: {new (data?: TBoolNodeStruct | TBoolNodeStructSerialized): TBoolNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TBoolNode {
+    public static create(data: {[key: string]: TBoolNodeStructSerialized}): TBoolNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TBoolNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TBoolNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
+TBoolNodeStruct.register(TBoolNodeStruct.FullClassName, TBoolNodeStruct);
+BoolNodeStruct.register(TBoolNodeStruct.FullClassName, TBoolNodeStruct);
+TypeInfoStruct.register(TBoolNodeStruct.FullClassName, TBoolNodeStruct);

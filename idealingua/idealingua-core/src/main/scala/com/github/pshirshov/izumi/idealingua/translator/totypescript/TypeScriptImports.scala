@@ -13,10 +13,19 @@ final case class TypeScriptImport(id: TypeId, pkg: String)
 
 final case class TypeScriptImports(imports: List[TypeScriptImport] = List.empty) {
   private def renderTypeImports(id: TypeId, ts: Typespace): String = id match {
-    case adt: AdtId => s"${adt.name}, ${adt.name}Helpers"
-    case i: InterfaceId => s"${i.name}, ${ts.implId(i).name}, ${ts.implId(i).name}Serialized"
-    case d: DTOId => s"${d.name}, ${d.name}Serialized"
-    case _ => id.name
+    case adt: AdtId =>
+      s"${adt.name}, ${adt.name}Helpers"
+    case i: InterfaceId => {
+
+
+      s"${i.name}, ${ts.implId(i).name}, ${ts.implId(i).name}Serialized"
+
+
+    }
+    case d: DTOId =>
+      s"${d.name}, ${d.name}Serialized"
+    case _ =>
+      id.name
   }
 
   def render(ts: Typespace): String = {

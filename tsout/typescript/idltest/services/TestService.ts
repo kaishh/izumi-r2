@@ -1,6 +1,6 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { SuccessData, Struct, StructSerialized } from './SuccessData';
-import { ErrorData, Struct, StructSerialized } from './ErrorData';
+import { SuccessData, SuccessDataStruct, SuccessDataStructSerialized } from './SuccessData';
+import { ErrorData, ErrorDataStruct, ErrorDataStructSerialized } from './ErrorData';
 import {
     IRTServiceClientInData,
     IRTServiceClientOutData,

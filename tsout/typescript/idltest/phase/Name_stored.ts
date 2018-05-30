@@ -1,6 +1,6 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Name_stored_, Struct, StructSerialized } from './Name_stored_';
-import { Struct, StructSerialized } from './Name';
+import { Name_stored_, Name_stored_Struct, Name_stored_StructSerialized } from './Name_stored_';
+import { NameStruct, NameStructSerialized } from './Name';
 
 // Name_stored DTO
 export class Name_stored implements Name_stored_  {
@@ -61,7 +61,7 @@ export class Name_stored implements Name_stored_  {
         this.bytes = data.bytes;
     }
 
-    public toName_stored_(): StructSerialized {
+    public toName_stored_(): Name_stored_StructSerialized {
         return {
             'name': this.name,
             'bytes': this.bytes
@@ -76,10 +76,10 @@ export class Name_stored implements Name_stored_  {
     }
 }
 
-export interface Name_storedSerialized extends StructSerialized  {
+export interface Name_storedSerialized extends Name_stored_StructSerialized  {
     name: string;
     bytes: number;
 }
 
-Struct.register(Name_stored.FullClassName, Name_stored);
-Struct.register(Name_stored.FullClassName, Name_stored);
+Name_stored_Struct.register(Name_stored.FullClassName, Name_stored);
+NameStruct.register(Name_stored.FullClassName, Name_stored);

@@ -5,54 +5,54 @@ export interface TestMixin {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TestMixinStructSerialized;
 }
-export interface StructSerialized {
+export interface TestMixinStructSerialized {
 }
 
-export class Struct implements TestMixin {
+export class TestMixinStruct implements TestMixin {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.syntax.TestMixin';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.syntax.TestMixin.Struct';
+    public static readonly ClassName = 'TestMixinStruct';
+    public static readonly FullClassName = 'idltest.syntax.TestMixin.TestMixinStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TestMixinStruct.PackageName; }
+    public getClassName(): string { return TestMixinStruct.ClassName; }
+    public getFullClassName(): string { return TestMixinStruct.FullClassName; }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TestMixinStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
 
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TestMixinStructSerialized {
         return {
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TestMixinStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TestMixin}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TestMixinStruct | TestMixinStructSerialized): TestMixin}} = {
+        [TestMixinStruct.FullClassName]: TestMixinStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TestMixin}): void {
+    public static register(className: string, ctor: {new (data?: TestMixinStruct | TestMixinStructSerialized): TestMixin}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TestMixin {
+    public static create(data: {[key: string]: TestMixinStructSerialized}): TestMixin {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TestMixinStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TestMixinStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+TestMixinStruct.register(TestMixinStruct.FullClassName, TestMixinStruct);

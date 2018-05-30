@@ -5,28 +5,28 @@ export interface TestInterface2 {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TestInterface2StructSerialized;
 
     sameEverywhereField: number;
     sameField: number;
     if2Field: number;
 }
 
-export interface StructSerialized {
+export interface TestInterface2StructSerialized {
     sameEverywhereField: number;
     sameField: number;
     if2Field: number;
 }
 
-export class Struct implements TestInterface2 {
+export class TestInterface2Struct implements TestInterface2 {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.diamonds.TestInterface2';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.diamonds.TestInterface2.Struct';
+    public static readonly ClassName = 'TestInterface2Struct';
+    public static readonly FullClassName = 'idltest.diamonds.TestInterface2.TestInterface2Struct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TestInterface2Struct.PackageName; }
+    public getClassName(): string { return TestInterface2Struct.ClassName; }
+    public getFullClassName(): string { return TestInterface2Struct.FullClassName; }
 
     private _sameEverywhereField: number;
     private _sameField: number;
@@ -92,7 +92,7 @@ export class Struct implements TestInterface2 {
         this._if2Field = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TestInterface2StructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -102,7 +102,7 @@ export class Struct implements TestInterface2 {
         this.if2Field = data.if2Field;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TestInterface2StructSerialized {
         return {
             'sameEverywhereField': this.sameEverywhereField,
             'sameField': this.sameField,
@@ -110,27 +110,27 @@ export class Struct implements TestInterface2 {
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TestInterface2Struct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TestInterface2}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TestInterface2Struct | TestInterface2StructSerialized): TestInterface2}} = {
+        [TestInterface2Struct.FullClassName]: TestInterface2Struct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TestInterface2}): void {
+    public static register(className: string, ctor: {new (data?: TestInterface2Struct | TestInterface2StructSerialized): TestInterface2}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TestInterface2 {
+    public static create(data: {[key: string]: TestInterface2StructSerialized}): TestInterface2 {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TestInterface2Struct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TestInterface2Struct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+TestInterface2Struct.register(TestInterface2Struct.FullClassName, TestInterface2Struct);

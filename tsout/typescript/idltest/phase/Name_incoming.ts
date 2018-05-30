@@ -1,5 +1,5 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Name, Struct, StructSerialized } from './Name';
+import { Name, NameStruct, NameStructSerialized } from './Name';
 
 // Name_incoming DTO
 export class Name_incoming implements Name  {
@@ -38,7 +38,7 @@ export class Name_incoming implements Name  {
         this.name = data.name;
     }
 
-    public toName(): StructSerialized {
+    public toName(): NameStructSerialized {
         return {
             'name': this.name
         };
@@ -51,8 +51,8 @@ export class Name_incoming implements Name  {
     }
 }
 
-export interface Name_incomingSerialized extends StructSerialized  {
+export interface Name_incomingSerialized extends NameStructSerialized  {
     name: string;
 }
 
-Struct.register(Name_incoming.FullClassName, Name_incoming);
+NameStruct.register(Name_incoming.FullClassName, Name_incoming);

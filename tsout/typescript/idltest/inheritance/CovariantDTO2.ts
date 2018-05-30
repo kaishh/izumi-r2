@@ -1,7 +1,7 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { CovariantA, Struct, StructSerialized } from './CovariantA';
-import { Struct, StructSerialized } from './WithCovariance';
-import { InheritedCovariant, Struct, StructSerialized } from './InheritedCovariant';
+import { CovariantA, CovariantAStruct, CovariantAStructSerialized } from './CovariantA';
+import { WithCovarianceStruct, WithCovarianceStructSerialized } from './WithCovariance';
+import { InheritedCovariant, InheritedCovariantStruct, InheritedCovariantStructSerialized } from './InheritedCovariant';
 
 // CovariantDTO2 DTO
 export class CovariantDTO2 implements InheritedCovariant  {
@@ -35,7 +35,7 @@ export class CovariantDTO2 implements InheritedCovariant  {
         this.field = CovariantAStruct.create(data.field);
     }
 
-    public toInheritedCovariant(): StructSerialized {
+    public toInheritedCovariant(): InheritedCovariantStructSerialized {
         return {
             'field': {[this.field.getFullClassName()]: this.field.serialize()}
         };
@@ -48,9 +48,9 @@ export class CovariantDTO2 implements InheritedCovariant  {
     }
 }
 
-export interface CovariantDTO2Serialized extends StructSerialized  {
-    field: {[key: string]: StructSerialized};
+export interface CovariantDTO2Serialized extends InheritedCovariantStructSerialized  {
+    field: {[key: string]: CovariantAStructSerialized};
 }
 
-Struct.register(CovariantDTO2.FullClassName, CovariantDTO2);
-Struct.register(CovariantDTO2.FullClassName, CovariantDTO2);
+InheritedCovariantStruct.register(CovariantDTO2.FullClassName, CovariantDTO2);
+WithCovarianceStruct.register(CovariantDTO2.FullClassName, CovariantDTO2);

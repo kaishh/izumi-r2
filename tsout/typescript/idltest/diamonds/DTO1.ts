@@ -1,7 +1,7 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Struct, StructSerialized } from './TestInterface1';
-import { Struct, StructSerialized } from './TestInterface3';
-import { Struct, StructSerialized } from './TestInterface2';
+import { TestInterface1Struct, TestInterface1StructSerialized } from './TestInterface1';
+import { TestInterface3Struct, TestInterface3StructSerialized } from './TestInterface3';
+import { TestInterface2Struct, TestInterface2StructSerialized } from './TestInterface2';
 
 // DTO1 DTO
 export class DTO1  {
@@ -175,6 +175,6 @@ export interface DTO1Serialized  {
     if1Field_overriden: number;
 }
 
-Struct.register(DTO1.FullClassName, DTO1);
-Struct.register(DTO1.FullClassName, DTO1);
-Struct.register(DTO1.FullClassName, DTO1);
+TestInterface2Struct.register(DTO1.FullClassName, DTO1);
+TestInterface3Struct.register(DTO1.FullClassName, DTO1);
+TestInterface1Struct.register(DTO1.FullClassName, DTO1);

@@ -1,7 +1,7 @@
 // Auto-generated, any modifications may be overwritten in the future.
 import { Type, TypeSerialized } from './Type';
-import { Struct, StructSerialized } from './TypeInfo';
-import { AppNode, Struct, StructSerialized } from './AppNode';
+import { TypeInfoStruct, TypeInfoStructSerialized } from './TypeInfo';
+import { AppNode, AppNodeStruct, AppNodeStructSerialized } from './AppNode';
 import { AST, ASTHelpers } from './AST';
 
 // TAppNode Interface
@@ -9,28 +9,28 @@ export interface TAppNode extends AppNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TAppNodeStructSerialized;
 
     type: Type;
     fun: AST;
     args: AST[];
 }
 
-export interface StructSerialized extends StructSerialized {
+export interface TAppNodeStructSerialized extends AppNodeStructSerialized {
     type: TypeSerialized;
     fun: {[key: string]: any};
     args: {[key: string]: any}[];
 }
 
-export class Struct implements TAppNode {
+export class TAppNodeStruct implements TAppNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.TAppNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.TAppNode.Struct';
+    public static readonly ClassName = 'TAppNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.TAppNode.TAppNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TAppNodeStruct.PackageName; }
+    public getClassName(): string { return TAppNodeStruct.ClassName; }
+    public getFullClassName(): string { return TAppNodeStruct.FullClassName; }
 
     private _type: Type;
     private _fun: AST;
@@ -69,7 +69,7 @@ export class Struct implements TAppNode {
         this._args = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TAppNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -79,7 +79,7 @@ export class Struct implements TAppNode {
         this.args = data.args.map(e => { return ASTHelpers.deserialize(e); });
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TAppNodeStructSerialized {
         return {
             'type': this.type.serialize(),
             'fun': ASTHelpers.serialize(this.fun),
@@ -87,29 +87,29 @@ export class Struct implements TAppNode {
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TAppNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TAppNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TAppNodeStruct | TAppNodeStructSerialized): TAppNode}} = {
+        [TAppNodeStruct.FullClassName]: TAppNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TAppNode}): void {
+    public static register(className: string, ctor: {new (data?: TAppNodeStruct | TAppNodeStructSerialized): TAppNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TAppNode {
+    public static create(data: {[key: string]: TAppNodeStructSerialized}): TAppNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TAppNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TAppNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
+TAppNodeStruct.register(TAppNodeStruct.FullClassName, TAppNodeStruct);
+AppNodeStruct.register(TAppNodeStruct.FullClassName, TAppNodeStruct);
+TypeInfoStruct.register(TAppNodeStruct.FullClassName, TAppNodeStruct);

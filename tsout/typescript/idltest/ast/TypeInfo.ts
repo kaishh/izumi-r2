@@ -6,24 +6,24 @@ export interface TypeInfo {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TypeInfoStructSerialized;
 
     type: Type;
 }
 
-export interface StructSerialized {
+export interface TypeInfoStructSerialized {
     type: TypeSerialized;
 }
 
-export class Struct implements TypeInfo {
+export class TypeInfoStruct implements TypeInfo {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.TypeInfo';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.TypeInfo.Struct';
+    public static readonly ClassName = 'TypeInfoStruct';
+    public static readonly FullClassName = 'idltest.ast.TypeInfo.TypeInfoStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TypeInfoStruct.PackageName; }
+    public getClassName(): string { return TypeInfoStruct.ClassName; }
+    public getFullClassName(): string { return TypeInfoStruct.FullClassName; }
 
     private _type: Type;
 
@@ -38,7 +38,7 @@ export class Struct implements TypeInfo {
         this._type = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TypeInfoStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -46,33 +46,33 @@ export class Struct implements TypeInfo {
         this.type = new Type(data.type);
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TypeInfoStructSerialized {
         return {
             'type': this.type.serialize()
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TypeInfoStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TypeInfo}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TypeInfoStruct | TypeInfoStructSerialized): TypeInfo}} = {
+        [TypeInfoStruct.FullClassName]: TypeInfoStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TypeInfo}): void {
+    public static register(className: string, ctor: {new (data?: TypeInfoStruct | TypeInfoStructSerialized): TypeInfo}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TypeInfo {
+    public static create(data: {[key: string]: TypeInfoStructSerialized}): TypeInfo {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TypeInfoStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TypeInfoStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+TypeInfoStruct.register(TypeInfoStruct.FullClassName, TypeInfoStruct);

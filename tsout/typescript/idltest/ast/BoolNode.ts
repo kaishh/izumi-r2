@@ -5,24 +5,24 @@ export interface BoolNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): BoolNodeStructSerialized;
 
     lit: boolean;
 }
 
-export interface StructSerialized {
+export interface BoolNodeStructSerialized {
     lit: boolean;
 }
 
-export class Struct implements BoolNode {
+export class BoolNodeStruct implements BoolNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.BoolNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.BoolNode.Struct';
+    public static readonly ClassName = 'BoolNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.BoolNode.BoolNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return BoolNodeStruct.PackageName; }
+    public getClassName(): string { return BoolNodeStruct.ClassName; }
+    public getFullClassName(): string { return BoolNodeStruct.FullClassName; }
 
     private _lit: boolean;
 
@@ -42,7 +42,7 @@ export class Struct implements BoolNode {
         this._lit = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: BoolNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -50,33 +50,33 @@ export class Struct implements BoolNode {
         this.lit = data.lit;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): BoolNodeStructSerialized {
         return {
             'lit': this.lit
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use BoolNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): BoolNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: BoolNodeStruct | BoolNodeStructSerialized): BoolNode}} = {
+        [BoolNodeStruct.FullClassName]: BoolNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): BoolNode}): void {
+    public static register(className: string, ctor: {new (data?: BoolNodeStruct | BoolNodeStructSerialized): BoolNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): BoolNode {
+    public static create(data: {[key: string]: BoolNodeStructSerialized}): BoolNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = BoolNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for BoolNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+BoolNodeStruct.register(BoolNodeStruct.FullClassName, BoolNodeStruct);

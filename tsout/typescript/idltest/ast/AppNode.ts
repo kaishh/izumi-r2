@@ -6,26 +6,26 @@ export interface AppNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): AppNodeStructSerialized;
 
     fun: AST;
     args: AST[];
 }
 
-export interface StructSerialized {
+export interface AppNodeStructSerialized {
     fun: {[key: string]: any};
     args: {[key: string]: any}[];
 }
 
-export class Struct implements AppNode {
+export class AppNodeStruct implements AppNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.AppNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.AppNode.Struct';
+    public static readonly ClassName = 'AppNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.AppNode.AppNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return AppNodeStruct.PackageName; }
+    public getClassName(): string { return AppNodeStruct.ClassName; }
+    public getFullClassName(): string { return AppNodeStruct.FullClassName; }
 
     private _fun: AST;
     private _args: AST[];
@@ -52,7 +52,7 @@ export class Struct implements AppNode {
         this._args = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: AppNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -61,34 +61,34 @@ export class Struct implements AppNode {
         this.args = data.args.map(e => { return ASTHelpers.deserialize(e); });
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): AppNodeStructSerialized {
         return {
             'fun': ASTHelpers.serialize(this.fun),
             'args': this.args.map(e => { return ASTHelpers.serialize(e); })
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use AppNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): AppNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: AppNodeStruct | AppNodeStructSerialized): AppNode}} = {
+        [AppNodeStruct.FullClassName]: AppNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): AppNode}): void {
+    public static register(className: string, ctor: {new (data?: AppNodeStruct | AppNodeStructSerialized): AppNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): AppNode {
+    public static create(data: {[key: string]: AppNodeStructSerialized}): AppNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = AppNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for AppNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+AppNodeStruct.register(AppNodeStruct.FullClassName, AppNodeStruct);

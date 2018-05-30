@@ -71,7 +71,7 @@ class RuntimeHttp4s[R[_] : IRTServiceResult : Monad] {
         val methodId = IRTMethod(IRTServiceId(service), IRTMethodId(method))
         implicit val dec: EntityDecoder[R, muxer.Input] = requestDecoder(ctx, methodId)
 
-
+        // request.req.decode[IRTInContext[IRTMuxRequest[Product], Ctx]] {
         request.req.decode[IRTInContext[IRTMuxRequest[Product], Ctx]] {
           message =>
             TM.flatMap(muxer.dispatch(message))(dsl.Ok(_))

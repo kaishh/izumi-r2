@@ -1,17 +1,17 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { IntNode, Struct, StructSerialized } from './IntNode';
-import { IfNode, Struct, StructSerialized } from './IfNode';
-import { FloatNode, Struct, StructSerialized } from './FloatNode';
-import { AppNode, Struct, StructSerialized } from './AppNode';
-import { LamNode, Struct, StructSerialized } from './LamNode';
-import { BoolNode, Struct, StructSerialized } from './BoolNode';
-import { SymNode, Struct, StructSerialized } from './SymNode';
+import { IntNode, IntNodeStruct, IntNodeStructSerialized } from './IntNode';
+import { IfNode, IfNodeStruct, IfNodeStructSerialized } from './IfNode';
+import { FloatNode, FloatNodeStruct, FloatNodeStructSerialized } from './FloatNode';
+import { AppNode, AppNodeStruct, AppNodeStructSerialized } from './AppNode';
+import { LamNode, LamNodeStruct, LamNodeStructSerialized } from './LamNode';
+import { BoolNode, BoolNodeStruct, BoolNodeStructSerialized } from './BoolNode';
+import { SymNode, SymNodeStruct, SymNodeStructSerialized } from './SymNode';
 
 // AST Algebraic Data Type
 export type AST = IntNode | FloatNode | BoolNode | SymNode | AppNode | LamNode | IfNode;
 
 export class ASTHelpers {
-    public static serialize(adt: AST): {[key: string]: StructSerialized | StructSerialized | StructSerialized | StructSerialized | StructSerialized | StructSerialized | StructSerialized} {
+    public static serialize(adt: AST): {[key: string]: IntNodeStructSerialized | FloatNodeStructSerialized | BoolNodeStructSerialized | SymNodeStructSerialized | AppNodeStructSerialized | LamNodeStructSerialized | IfNodeStructSerialized} {
         const className = adt.getClassName();
 
         return {
@@ -19,7 +19,7 @@ export class ASTHelpers {
         };
     }
 
-    public static deserialize(data: {[key: string]: StructSerialized | StructSerialized | StructSerialized | StructSerialized | StructSerialized | StructSerialized | StructSerialized}): AST {
+    public static deserialize(data: {[key: string]: IntNodeStructSerialized | FloatNodeStructSerialized | BoolNodeStructSerialized | SymNodeStructSerialized | AppNodeStructSerialized | LamNodeStructSerialized | IfNodeStructSerialized}): AST {
         const id = Object.keys(data)[0];
         const content = data[id];
         switch (id) {

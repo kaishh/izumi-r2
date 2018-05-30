@@ -6,28 +6,28 @@ export interface IfNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): IfNodeStructSerialized;
 
     cond: AST;
     thenNode: AST;
     elseNode: AST;
 }
 
-export interface StructSerialized {
+export interface IfNodeStructSerialized {
     cond: {[key: string]: any};
     thenNode: {[key: string]: any};
     elseNode: {[key: string]: any};
 }
 
-export class Struct implements IfNode {
+export class IfNodeStruct implements IfNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.IfNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.IfNode.Struct';
+    public static readonly ClassName = 'IfNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.IfNode.IfNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return IfNodeStruct.PackageName; }
+    public getClassName(): string { return IfNodeStruct.ClassName; }
+    public getFullClassName(): string { return IfNodeStruct.FullClassName; }
 
     private _cond: AST;
     private _thenNode: AST;
@@ -66,7 +66,7 @@ export class Struct implements IfNode {
         this._elseNode = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: IfNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -76,7 +76,7 @@ export class Struct implements IfNode {
         this.elseNode = ASTHelpers.deserialize(data.elseNode);
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): IfNodeStructSerialized {
         return {
             'cond': ASTHelpers.serialize(this.cond),
             'thenNode': ASTHelpers.serialize(this.thenNode),
@@ -84,27 +84,27 @@ export class Struct implements IfNode {
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use IfNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): IfNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: IfNodeStruct | IfNodeStructSerialized): IfNode}} = {
+        [IfNodeStruct.FullClassName]: IfNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): IfNode}): void {
+    public static register(className: string, ctor: {new (data?: IfNodeStruct | IfNodeStructSerialized): IfNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): IfNode {
+    public static create(data: {[key: string]: IfNodeStructSerialized}): IfNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = IfNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for IfNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+IfNodeStruct.register(IfNodeStruct.FullClassName, IfNodeStruct);

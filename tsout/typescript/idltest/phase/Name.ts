@@ -5,24 +5,24 @@ export interface Name {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): NameStructSerialized;
 
     name: string;
 }
 
-export interface StructSerialized {
+export interface NameStructSerialized {
     name: string;
 }
 
-export class Struct implements Name {
+export class NameStruct implements Name {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.phase.Name';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.phase.Name.Struct';
+    public static readonly ClassName = 'NameStruct';
+    public static readonly FullClassName = 'idltest.phase.Name.NameStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return NameStruct.PackageName; }
+    public getClassName(): string { return NameStruct.ClassName; }
+    public getFullClassName(): string { return NameStruct.FullClassName; }
 
     private _name: string;
 
@@ -42,7 +42,7 @@ export class Struct implements Name {
         this._name = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: NameStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -50,33 +50,33 @@ export class Struct implements Name {
         this.name = data.name;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): NameStructSerialized {
         return {
             'name': this.name
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use NameStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): Name}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: NameStruct | NameStructSerialized): Name}} = {
+        [NameStruct.FullClassName]: NameStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): Name}): void {
+    public static register(className: string, ctor: {new (data?: NameStruct | NameStructSerialized): Name}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): Name {
+    public static create(data: {[key: string]: NameStructSerialized}): Name {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = NameStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for NameStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+NameStruct.register(NameStruct.FullClassName, NameStruct);

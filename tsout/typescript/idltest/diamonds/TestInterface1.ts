@@ -5,7 +5,7 @@ export interface TestInterface1 {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TestInterface1StructSerialized;
 
     sameEverywhereField: number;
     if1Field_inherited: number;
@@ -13,22 +13,22 @@ export interface TestInterface1 {
     if1Field_overriden: number;
 }
 
-export interface StructSerialized {
+export interface TestInterface1StructSerialized {
     sameEverywhereField: number;
     if1Field_inherited: number;
     sameField: number;
     if1Field_overriden: number;
 }
 
-export class Struct implements TestInterface1 {
+export class TestInterface1Struct implements TestInterface1 {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.diamonds.TestInterface1';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.diamonds.TestInterface1.Struct';
+    public static readonly ClassName = 'TestInterface1Struct';
+    public static readonly FullClassName = 'idltest.diamonds.TestInterface1.TestInterface1Struct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TestInterface1Struct.PackageName; }
+    public getClassName(): string { return TestInterface1Struct.ClassName; }
+    public getFullClassName(): string { return TestInterface1Struct.FullClassName; }
 
     private _sameEverywhereField: number;
     private _if1Field_inherited: number;
@@ -115,7 +115,7 @@ export class Struct implements TestInterface1 {
         this._if1Field_overriden = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TestInterface1StructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -126,7 +126,7 @@ export class Struct implements TestInterface1 {
         this.if1Field_overriden = data.if1Field_overriden;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TestInterface1StructSerialized {
         return {
             'sameEverywhereField': this.sameEverywhereField,
             'if1Field_inherited': this.if1Field_inherited,
@@ -135,27 +135,27 @@ export class Struct implements TestInterface1 {
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TestInterface1Struct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TestInterface1}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TestInterface1Struct | TestInterface1StructSerialized): TestInterface1}} = {
+        [TestInterface1Struct.FullClassName]: TestInterface1Struct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TestInterface1}): void {
+    public static register(className: string, ctor: {new (data?: TestInterface1Struct | TestInterface1StructSerialized): TestInterface1}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TestInterface1 {
+    public static create(data: {[key: string]: TestInterface1StructSerialized}): TestInterface1 {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TestInterface1Struct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TestInterface1Struct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+TestInterface1Struct.register(TestInterface1Struct.FullClassName, TestInterface1Struct);

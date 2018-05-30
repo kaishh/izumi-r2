@@ -1,5 +1,5 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Empty, Struct, StructSerialized } from './Empty';
+import { Empty, EmptyStruct, EmptyStructSerialized } from './Empty';
 
 // Str DTO
 export class Str implements Empty  {
@@ -38,7 +38,7 @@ export class Str implements Empty  {
         this.str = data.str;
     }
 
-    public toEmpty(): StructSerialized {
+    public toEmpty(): EmptyStructSerialized {
         return {
         };
     }
@@ -50,8 +50,8 @@ export class Str implements Empty  {
     }
 }
 
-export interface StrSerialized extends StructSerialized  {
+export interface StrSerialized extends EmptyStructSerialized  {
     str: string;
 }
 
-Struct.register(Str.FullClassName, Str);
+EmptyStruct.register(Str.FullClassName, Str);

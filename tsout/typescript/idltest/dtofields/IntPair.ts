@@ -5,26 +5,26 @@ export interface IntPair {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): IntPairStructSerialized;
 
     y: number;
     x: number;
 }
 
-export interface StructSerialized {
+export interface IntPairStructSerialized {
     y: number;
     x: number;
 }
 
-export class Struct implements IntPair {
+export class IntPairStruct implements IntPair {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.dtofields.IntPair';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.dtofields.IntPair.Struct';
+    public static readonly ClassName = 'IntPairStruct';
+    public static readonly FullClassName = 'idltest.dtofields.IntPair.IntPairStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return IntPairStruct.PackageName; }
+    public getClassName(): string { return IntPairStruct.ClassName; }
+    public getFullClassName(): string { return IntPairStruct.FullClassName; }
 
     private _y: number;
     private _x: number;
@@ -69,7 +69,7 @@ export class Struct implements IntPair {
         this._x = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: IntPairStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -78,34 +78,34 @@ export class Struct implements IntPair {
         this.x = data.x;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): IntPairStructSerialized {
         return {
             'y': this.y,
             'x': this.x
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use IntPairStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): IntPair}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: IntPairStruct | IntPairStructSerialized): IntPair}} = {
+        [IntPairStruct.FullClassName]: IntPairStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): IntPair}): void {
+    public static register(className: string, ctor: {new (data?: IntPairStruct | IntPairStructSerialized): IntPair}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): IntPair {
+    public static create(data: {[key: string]: IntPairStructSerialized}): IntPair {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = IntPairStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for IntPairStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+IntPairStruct.register(IntPairStruct.FullClassName, IntPairStruct);

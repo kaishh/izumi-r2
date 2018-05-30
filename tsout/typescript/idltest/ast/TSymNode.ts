@@ -1,33 +1,33 @@
 // Auto-generated, any modifications may be overwritten in the future.
 import { Type, TypeSerialized } from './Type';
-import { Struct, StructSerialized } from './TypeInfo';
-import { SymNode, Struct, StructSerialized } from './SymNode';
+import { TypeInfoStruct, TypeInfoStructSerialized } from './TypeInfo';
+import { SymNode, SymNodeStruct, SymNodeStructSerialized } from './SymNode';
 
 // TSymNode Interface
 export interface TSymNode extends SymNode {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): TSymNodeStructSerialized;
 
     lit: string;
     type: Type;
 }
 
-export interface StructSerialized extends StructSerialized {
+export interface TSymNodeStructSerialized extends SymNodeStructSerialized {
     lit: string;
     type: TypeSerialized;
 }
 
-export class Struct implements TSymNode {
+export class TSymNodeStruct implements TSymNode {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.ast.TSymNode';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.ast.TSymNode.Struct';
+    public static readonly ClassName = 'TSymNodeStruct';
+    public static readonly FullClassName = 'idltest.ast.TSymNode.TSymNodeStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return TSymNodeStruct.PackageName; }
+    public getClassName(): string { return TSymNodeStruct.ClassName; }
+    public getFullClassName(): string { return TSymNodeStruct.FullClassName; }
 
     private _lit: string;
     private _type: Type;
@@ -59,7 +59,7 @@ export class Struct implements TSymNode {
         this._type = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: TSymNodeStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -68,36 +68,36 @@ export class Struct implements TSymNode {
         this.type = new Type(data.type);
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): TSymNodeStructSerialized {
         return {
             'lit': this.lit,
             'type': this.type.serialize()
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use TSymNodeStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): TSymNode}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: TSymNodeStruct | TSymNodeStructSerialized): TSymNode}} = {
+        [TSymNodeStruct.FullClassName]: TSymNodeStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): TSymNode}): void {
+    public static register(className: string, ctor: {new (data?: TSymNodeStruct | TSymNodeStructSerialized): TSymNode}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): TSymNode {
+    public static create(data: {[key: string]: TSymNodeStructSerialized}): TSymNode {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = TSymNodeStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for TSymNodeStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
-Struct.register(Struct.FullClassName, Struct);
+TSymNodeStruct.register(TSymNodeStruct.FullClassName, TSymNodeStruct);
+SymNodeStruct.register(TSymNodeStruct.FullClassName, TSymNodeStruct);
+TypeInfoStruct.register(TSymNodeStruct.FullClassName, TSymNodeStruct);

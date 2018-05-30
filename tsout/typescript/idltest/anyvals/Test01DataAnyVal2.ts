@@ -1,5 +1,5 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Struct, StructSerialized } from './Test01MixinAnyVal';
+import { Test01MixinAnyValStruct, Test01MixinAnyValStructSerialized } from './Test01MixinAnyVal';
 
 // Test01DataAnyVal2 DTO
 export class Test01DataAnyVal2  {
@@ -81,4 +81,4 @@ export interface Test01DataAnyVal2Serialized  {
     i08: number;
 }
 
-Struct.register(Test01DataAnyVal2.FullClassName, Test01DataAnyVal2);
+Test01MixinAnyValStruct.register(Test01DataAnyVal2.FullClassName, Test01DataAnyVal2);

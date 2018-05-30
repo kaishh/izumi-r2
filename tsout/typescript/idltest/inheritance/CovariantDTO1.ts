@@ -1,6 +1,6 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { WithCovariance, Struct, StructSerialized } from './WithCovariance';
-import { Covariant, Struct, StructSerialized } from './Covariant';
+import { WithCovariance, WithCovarianceStruct, WithCovarianceStructSerialized } from './WithCovariance';
+import { Covariant, CovariantStruct, CovariantStructSerialized } from './Covariant';
 
 // CovariantDTO1 DTO
 export class CovariantDTO1 implements WithCovariance  {
@@ -34,7 +34,7 @@ export class CovariantDTO1 implements WithCovariance  {
         this.field = CovariantStruct.create(data.field);
     }
 
-    public toWithCovariance(): StructSerialized {
+    public toWithCovariance(): WithCovarianceStructSerialized {
         return {
             'field': {[this.field.getFullClassName()]: this.field.serialize()}
         };
@@ -47,8 +47,8 @@ export class CovariantDTO1 implements WithCovariance  {
     }
 }
 
-export interface CovariantDTO1Serialized extends StructSerialized  {
-    field: {[key: string]: StructSerialized};
+export interface CovariantDTO1Serialized extends WithCovarianceStructSerialized  {
+    field: {[key: string]: CovariantStructSerialized};
 }
 
-Struct.register(CovariantDTO1.FullClassName, CovariantDTO1);
+WithCovarianceStruct.register(CovariantDTO1.FullClassName, CovariantDTO1);

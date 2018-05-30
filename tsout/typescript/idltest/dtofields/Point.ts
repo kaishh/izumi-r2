@@ -1,6 +1,6 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Struct, StructSerialized } from './IntPair';
-import { Metadata, Struct, StructSerialized } from './Metadata';
+import { IntPairStruct, IntPairStructSerialized } from './IntPair';
+import { Metadata, MetadataStruct, MetadataStructSerialized } from './Metadata';
 
 // Point DTO
 export class Point implements Metadata  {
@@ -119,7 +119,7 @@ export class Point implements Metadata  {
         this.ownfield = data.ownfield;
     }
 
-    public toMetadata(): StructSerialized {
+    public toMetadata(): MetadataStructSerialized {
         return {
             'name': this.name,
             'id': this.id
@@ -137,7 +137,7 @@ export class Point implements Metadata  {
     }
 }
 
-export interface PointSerialized extends StructSerialized  {
+export interface PointSerialized extends MetadataStructSerialized  {
     x: number;
     name: string;
     y: number;
@@ -145,5 +145,5 @@ export interface PointSerialized extends StructSerialized  {
     ownfield: string;
 }
 
-Struct.register(Point.FullClassName, Point);
-Struct.register(Point.FullClassName, Point);
+MetadataStruct.register(Point.FullClassName, Point);
+IntPairStruct.register(Point.FullClassName, Point);

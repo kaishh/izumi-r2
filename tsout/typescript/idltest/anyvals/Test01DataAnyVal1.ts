@@ -1,5 +1,5 @@
 // Auto-generated, any modifications may be overwritten in the future.
-import { Test01MixinAnyVal, Struct, StructSerialized } from './Test01MixinAnyVal';
+import { Test01MixinAnyVal, Test01MixinAnyValStruct, Test01MixinAnyValStructSerialized } from './Test01MixinAnyVal';
 
 // Test01DataAnyVal1 DTO
 export class Test01DataAnyVal1 implements Test01MixinAnyVal  {
@@ -68,7 +68,7 @@ export class Test01DataAnyVal1 implements Test01MixinAnyVal  {
         this.i08 = data.i08;
     }
 
-    public toTest01MixinAnyVal(): StructSerialized {
+    public toTest01MixinAnyVal(): Test01MixinAnyValStructSerialized {
         return {
             'str': this.str
         };
@@ -82,9 +82,9 @@ export class Test01DataAnyVal1 implements Test01MixinAnyVal  {
     }
 }
 
-export interface Test01DataAnyVal1Serialized extends StructSerialized  {
+export interface Test01DataAnyVal1Serialized extends Test01MixinAnyValStructSerialized  {
     str: string;
     i08: number;
 }
 
-Struct.register(Test01DataAnyVal1.FullClassName, Test01DataAnyVal1);
+Test01MixinAnyValStruct.register(Test01DataAnyVal1.FullClassName, Test01DataAnyVal1);

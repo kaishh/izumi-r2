@@ -5,26 +5,26 @@ export interface Metadata {
     getPackageName(): string;
     getClassName(): string;
     getFullClassName(): string;
-    serialize(): StructSerialized;
+    serialize(): MetadataStructSerialized;
 
     name: string;
     id: string;
 }
 
-export interface StructSerialized {
+export interface MetadataStructSerialized {
     name: string;
     id: string;
 }
 
-export class Struct implements Metadata {
+export class MetadataStruct implements Metadata {
     // Runtime identification methods
     public static readonly PackageName = 'idltest.dtofields.Metadata';
-    public static readonly ClassName = 'Struct';
-    public static readonly FullClassName = 'idltest.dtofields.Metadata.Struct';
+    public static readonly ClassName = 'MetadataStruct';
+    public static readonly FullClassName = 'idltest.dtofields.Metadata.MetadataStruct';
 
-    public getPackageName(): string { return Struct.PackageName; }
-    public getClassName(): string { return Struct.ClassName; }
-    public getFullClassName(): string { return Struct.FullClassName; }
+    public getPackageName(): string { return MetadataStruct.PackageName; }
+    public getClassName(): string { return MetadataStruct.ClassName; }
+    public getFullClassName(): string { return MetadataStruct.FullClassName; }
 
     private _name: string;
     private _id: string;
@@ -61,7 +61,7 @@ export class Struct implements Metadata {
         this._id = value;
     }
 
-    constructor(data: StructSerialized = undefined) {
+    constructor(data: MetadataStructSerialized = undefined) {
         if (typeof data === 'undefined' || data === null) {
             return;
         }
@@ -70,34 +70,34 @@ export class Struct implements Metadata {
         this.id = data.id;
     }
 
-    public serialize(): StructSerialized {
+    public serialize(): MetadataStructSerialized {
         return {
             'name': this.name,
             'id': this.id
         };
     }
 
-    // Polymorphic section below. If a new type to be registered, use Struct.register method
+    // Polymorphic section below. If a new type to be registered, use MetadataStruct.register method
     // which will add it to the known list. You can also overwrite the existing registrations
     // in order to provide extended functionality on existing models, preserving the original class name.
 
-    private static _knownPolymorphic: {[key: string]: {new (data?: Struct | StructSerialized): Metadata}} = {
-        [Struct.FullClassName]: Struct
+    private static _knownPolymorphic: {[key: string]: {new (data?: MetadataStruct | MetadataStructSerialized): Metadata}} = {
+        [MetadataStruct.FullClassName]: MetadataStruct
     };
 
-    public static register(className: string, ctor: {new (data?: Struct | StructSerialized): Metadata}): void {
+    public static register(className: string, ctor: {new (data?: MetadataStruct | MetadataStructSerialized): Metadata}): void {
         this._knownPolymorphic[className] = ctor;
     }
 
-    public static create(data: {[key: string]: StructSerialized}): Metadata {
+    public static create(data: {[key: string]: MetadataStructSerialized}): Metadata {
         const polymorphicId = Object.keys(data)[0];
-        const ctor = Struct._knownPolymorphic[polymorphicId];
+        const ctor = MetadataStruct._knownPolymorphic[polymorphicId];
         if (!ctor) {
-          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for Struct.Create');
+          throw new Error('Unknown polymorphic type ' + polymorphicId + ' for MetadataStruct.Create');
         }
 
         return new ctor(data[polymorphicId]);
     }
 }
 
-Struct.register(Struct.FullClassName, Struct);
+MetadataStruct.register(MetadataStruct.FullClassName, MetadataStruct);
