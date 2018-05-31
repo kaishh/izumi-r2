@@ -126,7 +126,7 @@ object IdealinguaPlugin extends AutoPlugin {
   }
 
   private def compileSources(scope: Scope, ctargets: Seq[Invokation], classpath: Classpath): Seq[IDLCompiler.Result] = {
-    ctargets.filter(i => i.options.language == IDLLanguage.Scala && i.mode == Mode.Sources).map {
+    ctargets.filter(i => i.mode == Mode.Sources).map {
       invokation =>
         doCompile(scope, invokation, classpath)
     }
