@@ -62,13 +62,30 @@ object IdealinguaPlugin extends AutoPlugin {
     )
 
     , sourceGenerators in Compile += Def.task {
-      val src = sourceDirectory.value.toPath
-      val scope = Scope(src.resolve("main/izumi"), (sourceManaged in Compile).value.toPath)
-      val result = compileSources(scope, compilationTargets.value, (dependencyClasspath in Compile).value)
+          val src = sourceDirectory.value.toPath
+          val srcManaged = (sourceManaged in Compile).value.toPath
+          val resManaged = (resourceManaged in Compile).value.toPath
 
-      val files = result.flatMap(_.invokation).flatMap(_._2.paths)
-      files.map(_.toFile)
-    }.taskValue
+          val izumiSrcDir = src.resolve("main/izumi")
+
+          val scope = Scope(izumiSrcDir, srcManaged)
+
+          val (scalaTargets, nonScalaTargets) = compilationTargets.value.partition(i => i.options.language == IDLLanguage.Scala)
+
+          val depClasspath = (dependencyClasspath in Compile).value
+          val scala_result = compileSources(scope, scalaTargets, depClasspath)
+
+          val non_scala_result = nonScalaTargets.flatMap {
+            t =>
+              val nonScalaScope = Scope(izumiSrcDir, (resManaged.toFile / s"${t.options.language}").toPath)
+              compileSources(nonScalaScope, Seq(t), depClasspath)
+          }
+
+          val allResults = scala_result ++ non_scala_result
+
+          val files = allResults.flatMap(_.invokation).flatMap(_._2.paths)
+          files.map(_.toFile)
+        }.taskValue
 
     , resourceGenerators in Compile += Def.task {
       val idlbase = sourceDirectory.value / "main" / "izumi"
