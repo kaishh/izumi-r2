@@ -397,6 +397,29 @@ class StaticInjectorTest extends WordSpec {
       assert(fail)
     }
 
+    "Inject implicits only in concrete constructors in tagless final style module definitions" in {
+      import com.github.pshirshov.izumi.distage.model.reflection.universe.RuntimeDIUniverse.TagK
+      import Case20._
+
+      case class Definition[F[_] : TagK : Pointed](getResult: Int) extends StaticModuleDef {
+        // Look ma, this is not necessary!
+        // make[Pointed[F]].from(Pointed[F])
+
+        make[TestTrait].stat[TestServiceClass[F]]
+        stat[TestServiceClass[F]]
+        make[Int].named("TestService").from(getResult)
+        make[F[String]].from { res: Int @Id("TestService") => Pointed[F].point(s"Hello $res!") }
+      }
+
+      val listInjector = mkInjector()
+      val listPlan = listInjector.plan(Definition[List](5))
+      val listContext = listInjector.produce(listPlan)
+
+      assert(listContext.get[TestTrait].get == List(5))
+      assert(listContext.get[TestServiceClass[List]].get == List(5))
+      assert(listContext.get[List[String]] == List("Hello 5!"))
+    }
+
     """Progression test: macros do not yet support tagless final style module definitions bcs they don't support multiple parameter lists
       | g(but they can also support implicits directly by injecting `implicitly` calls and avoid that make[Pointed[F]]...)""".stripMargin in {
       assertTypeError("""
@@ -411,7 +434,7 @@ class StaticInjectorTest extends WordSpec {
           stat[TestServiceClass[F]]
           stat[TestServiceTrait[F]]
           make[Int].named("TestService").from(getResult)
-          make[F[String]].from { res: Int@Id("TestService") => Pointed[F].point(s"Hello $res!") }
+          make[F[String]].from { res: Int @Id("TestService") => Pointed[F].point(s"Hello $res!") }
         }
 
         val listInjector = mkInjector()

@@ -4,9 +4,15 @@ import com.github.pshirshov.izumi.distage.model.providers.ProviderMagnet
 import com.github.pshirshov.izumi.distage.model.reflection.universe.StaticDIUniverse
 import com.github.pshirshov.izumi.distage.provisioning.ConcreteConstructor
 import com.github.pshirshov.izumi.distage.reflection.{DependencyKeyProviderDefaultImpl, ReflectionProviderDefaultImpl, SymbolIntrospectorDefaultImpl}
-import com.github.pshirshov.izumi.fundamentals.reflection.MacroUtil
+import com.github.pshirshov.izumi.fundamentals.reflection.{AnnotationTools, MacroUtil, SingletonUniverse}
 
 import scala.reflect.macros.blackbox
+
+object Abc {
+  def findLengthBeforeImplicitParamList[U <: SingletonUniverse](l: List[List[U#Symbol]]): Int =
+    // the only way to tell between implicit param list and regular list is that first parameter is implicit, in regular list only other parameters maybe implicit, but not first
+    l.takeWhile(!_.headOption.exists(_.isImplicit)).flatten.length
+}
 
 object ConcreteConstructorMacro {
 
@@ -26,11 +32,20 @@ object ConcreteConstructorMacro {
 
     val UnaryWiring.Constructor(_, associations) = reflectionProvider.symbolToWiring(SafeType(targetType))
 
+    val nonImplicitsLength = Abc.findLengthBeforeImplicitParamList[u.type](
+      symbolIntrospector.selectConstructorMethod(SafeType(targetType)).typeSignatureIn(targetType).paramLists
+    )
+
     val (args, argNames) = associations.map {
       p =>
         val name = c.freshName(TermName(p.name))
-        q"val $name: ${p.wireWith.tpe.tpe}" -> name
-    }.toList.unzip
+
+        val mods = AnnotationTools.mkModifiers(u)(p.context.symbol.annotations)
+
+        q"$mods val $name: ${p.wireWith.tpe.tpe}" -> name
+    }.toList
+      .take(nonImplicitsLength)
+      .unzip
 
     val providerMagnet = symbolOf[ProviderMagnet.type].asClass.module
 
