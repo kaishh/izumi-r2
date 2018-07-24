@@ -240,6 +240,10 @@ libraryDependencies += Izumi.D.cats_effect // Import an izumi dependency
 
 R is for Runtime, D is for Dependencies, T is for Test artifacts
 
+@@@ warning { title='TODO' }
+Add docs on how to create your own BOMs
+@@@
+
 ### Build Manifest entries
 
 ### Git Manifest entries
