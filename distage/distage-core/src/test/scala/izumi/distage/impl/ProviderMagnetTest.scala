@@ -247,6 +247,15 @@ class ProviderMagnetTest extends WordSpec {
       assertTypeError("ProviderMagnet.apply(defconfannfn _)")
       assertTypeError("ProviderMagnet.apply(defconfannfn2 _)")
     }
+
+    "Support custom subtypes of Id annotation" in {
+      import izumi.distage.fixtures.ProviderCases.ProviderCase4._
+
+      val fn = ProviderMagnet.apply { _: Int @CustomerId => }
+
+      assert(fn.get.diKeys.head == DIKey.get[Int].named("customer"))
+    }
+
   }
 
 }

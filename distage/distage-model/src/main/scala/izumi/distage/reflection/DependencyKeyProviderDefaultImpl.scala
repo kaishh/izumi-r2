@@ -59,7 +59,6 @@ trait DependencyKeyProviderDefaultImpl extends DependencyKeyProvider {
 
   protected def typeOfWithAnnotation: u.SafeType
   protected def typeOfIdAnnotation: u.SafeType
-
 }
 
 object DependencyKeyProviderDefaultImpl {

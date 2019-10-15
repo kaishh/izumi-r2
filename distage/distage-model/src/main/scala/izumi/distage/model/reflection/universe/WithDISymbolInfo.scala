@@ -65,7 +65,7 @@ trait WithDISymbolInfo {
 
     implicit final class SymbolInfoExtensions(symbolInfo: SymbolInfo) {
       def findAnnotation(annType: SafeType): Option[u.Annotation] = {
-        symbolInfo.annotations.find(a => annType.use(tpe => AnnotationTools.annotationTypeEq(u)(tpe, a)))
+        symbolInfo.annotations.find(a => annType.use(tpe => AnnotationTools.annotationTypeSub(u)(tpe, a)))
       }
 
       def findUniqueAnnotation(annType: SafeType): Option[u.Annotation] = {
@@ -76,7 +76,7 @@ trait WithDISymbolInfo {
           throw new AnnotationConflictException(s"Multiple DI annotations on symbol `$symbolInfo` in ${symbolInfo.definingClass}: ${distageAnnos.niceList()}")
         }
 
-        symbolInfo.findAnnotation(annType)
+        findAnnotation(annType)
       }
     }
 

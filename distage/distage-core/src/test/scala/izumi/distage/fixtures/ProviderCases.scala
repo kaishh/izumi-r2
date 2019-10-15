@@ -67,4 +67,8 @@ object ProviderCases {
     def implType(typeanndep: TestDependency @Id("classdeftypeann1")): TestClass = new TestClass(typeanndep)
 
   }
+
+  object ProviderCase4 {
+    final class CustomerId extends Id("customer")
+  }
 }

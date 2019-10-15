@@ -17,4 +17,4 @@ package izumi.distage.model.definition
   *   }
   * }}}
   */
-final class Id(val name: String) extends DIStageAnnotation
+class Id(val name: String) extends DIStageAnnotation
